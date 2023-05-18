@@ -60,5 +60,14 @@ $(function() {
         xAnchor: 0.5, // 컨텐츠의 x 위치
         yAnchor: 0 // 컨텐츠의 y 위치
     });
-    
+  
+    /* 사이드바 */
+    $('#btn-menu').on('click', function() {
+        $('.side-bar').toggleClass('active')
+    })
+
+    /* 닫기 */
+    $('#btn-close').on('click', function() {
+        $('.side-bar').toggleClass('active')
+    })
 })
