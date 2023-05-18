@@ -49,9 +49,58 @@
 
     <hr>
 
+    <h3>게시글 수정</h3>
+    <h4>FORM 전송 | AJAX 전송</h4>
+    <!-- 요청 URL   : //192.168.0.44:8080/api/board -->
+    <!-- 요청 메소드 : PUT -->
+    <form action="//192.168.0.44:8080/api/board/update" method="post">
+        <table>
+            <tr>
+                <td><label for="boardNo">게시글 번호</label></td>
+                <td><input type="text" name="boardNo" id="update-boardNo"></td>
+            </tr>
+            <tr>
+                <td><label for="title">제목</label></td>
+                <td><input type="text" name="title" id="update-title"></td>
+            </tr>
+            <tr>
+                <td><label for="writer">작성자</label></td>
+                <td><input type="text" name="writer" id="update-writer"></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <textarea name="content" id="update-content" cols="50" rows="10"></textarea>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="FORM 전송">
+        <button type="button" onclick="updateJSON()">AJAX 요청(JSON)</button>
+        <button type="button" onclick="updateXML()">AJAX 요청(XML)</button>
+    </form>
+
+    <hr>
+
+    <h3>게시글 삭제</h3>
+    <h4>FORM 전송 | AJAX 전송</h4>
+    <!-- 요청 URL   : //192.168.0.44:8080/api/board -->
+    <!-- 요청 메소드 : DELETE -->
+    <form action="//192.168.0.44:8080/api/board/delete" method="post">
+        <table>
+            <tr>
+                <td><label for="boardNo">게시글 번호</label></td>
+                <td><input type="text" name="boardNo" id="delete-boardNo"></td>
+            </tr>
+        </table>
+        <input type="submit" value="FORM 전송">
+        <button type="button" onclick="deleteJSON()">AJAX 요청(JSON)</button>
+        <button type="button" onclick="deleteXML()">AJAX 요청(XML)</button>
+    </form>
+
+    <hr>
+
     <h3>게시글 목록</h3>
     <table border="1" id="board-list">
-        <tr>
+        <tr id="board-title">
             <th width="50">번호</th>
             <th width="300">제목</th>
             <th width="100">작성자</th>
@@ -85,11 +134,17 @@
                 success         : function(response, status) {
                     // response : 응답 데이터
                     // status   : 응답 상태
-                    let board = JSON.parse(response)
-                    // 데이터 화면에 출력하기
-                    $('#title').text(board.title)
-                    $('#writer').text(board.writer)
-                    $('#content').val(board.content)
+                    if( response == '' ) {
+                        alert('조회된 데이터가 없습니다.')
+                    }
+                    else {
+                        let board = JSON.parse(response)
+                        // 데이터 화면에 출력하기
+                        $('#title').text(board.title)
+                        $('#writer').text(board.writer)
+                        $('#content').val(board.content)
+                    }
+
                 },
                 // 에러
                 error           : function(xhr, status) {
@@ -131,6 +186,11 @@
                        $('#empty').remove()
                     }
                     
+                    // 게시글 목록 비우기
+                    let boardTitle = $('#board-title')
+                    $('#board-list').empty()
+                    $('#board-list').append(boardTitle)
+
                     // 게시글 목록 추가
                     let $boardList = $('#board-list')
                     for (const board of boardList) {
@@ -183,6 +243,7 @@
                     // response : 응답 데이터
                     // status   : 응답 상태
                     alert(response)
+                    getList()
                 },
                 // 에러
                 error           : function(xhr, status) {
@@ -222,6 +283,7 @@
                     // response : 응답 데이터
                     // status   : 응답 상태
                     alert(response)
+                    getList()
                 },
                 // 에러
                 error           : function(xhr, status) {
@@ -234,6 +296,163 @@
 
         }
 
+         // 게시글 수정 요청 - JSON
+         function updateJSON() {
+
+            let url = "http://192.168.0.44:8080/api/board" 
+
+            let boardNo = $('#update-boardNo').val()
+            let title = $('#update-title').val()
+            let writer = $('#update-writer').val()
+            let content = $('#update-content').val()
+
+            let data = {
+                'boardNo' : boardNo,
+                'title' : title,
+                'writer' : writer,
+                'content' : content,
+            }
+
+            // jQuery 로 AJAX 요청
+            $.ajax({
+                type            : 'PUT',                  // 요청 메소드
+                url             : url,                    // 요청 URL
+                data            : JSON.stringify(data),   // 요청 데이터
+                contentType     : 'application/json',     // 요청 데이터 타입
+                dataType        : 'html',                 // 응답 데이터 타입
+                // 요청 성공 
+                success         : function(response, status) {
+                    // response : 응답 데이터
+                    // status   : 응답 상태
+                    alert(response)
+                    getList()
+                },
+                // 에러
+                error           : function(xhr, status) {
+                    // xhr      : XMLHttpRequest 객체
+                    // status   : 응답 상태
+                    alert('에러 발생')
+                }
+                
+            })
+            }
+
+
+        // 게시글 수정 요청 - XML
+         function updateJSON() {
+
+            let url = "http://192.168.0.44:8080/api/board" 
+
+            let boardNo = $('#update-boardNo').val()
+            let title = $('#update-title').val()
+            let writer = $('#update-writer').val()
+            let content = $('#update-content').val()
+
+            let data = `<Board>
+                            <boardNo>${boardNo}</boardNo>
+                            <title>${title}</title>
+                            <writer>${wrtier}</writer>
+                            <content>${content}</content>
+                        </Board>
+                        `
+
+
+            // jQuery 로 AJAX 요청
+            $.ajax({
+                type            : 'PUT',                  // 요청 메소드
+                url             : url,                    // 요청 URL
+                data            : data,   // 요청 데이터
+                contentType     : 'application/xml',     // 요청 데이터 타입
+                dataType        : 'html',                 // 응답 데이터 타입
+                // 요청 성공 
+                success         : function(response, status) {
+                    // response : 응답 데이터
+                    // status   : 응답 상태
+                    alert(response)
+                    getList()
+                },
+                // 에러
+                error           : function(xhr, status) {
+                    // xhr      : XMLHttpRequest 객체
+                    // status   : 응답 상태
+                    alert('에러 발생')
+                }
+                
+            })
+            }
+
+        // 게시글 삭제 요청 - JSON
+         function deleteJSON() {
+
+            let url = "http://192.168.0.44:8080/api/board" 
+
+            let boardNo = $('#delete-boardNo').val()
+
+            let data = {
+                'boardNo' : boardNo,
+            }
+
+            // jQuery 로 AJAX 요청
+            $.ajax({
+                type            : 'DELETE',               // 요청 메소드
+                url             : url,                    // 요청 URL
+                data            : JSON.stringify(data),   // 요청 데이터
+                contentType     : 'application/json',     // 요청 데이터 타입
+                dataType        : 'html',                 // 응답 데이터 타입
+                // 요청 성공 
+                success         : function(response, status) {
+                    // response : 응답 데이터
+                    // status   : 응답 상태
+                    alert(response)
+                    getList()
+                },
+                // 에러
+                error           : function(xhr, status) {
+                    // xhr      : XMLHttpRequest 객체
+                    // status   : 응답 상태
+                    alert('에러 발생')
+                }
+                
+            })
+            }
+
+
+        // 게시글 삭제 요청 - XML
+        function deleteXML() {
+
+            let url = "http://192.168.0.44:8080/api/board" 
+
+            let boardNo = $('#delete-boardNo').val()
+
+            let data = `<Board>
+                            <boardNo>${boardNo}</boardNo>
+                        </Board>
+                        `
+
+
+            // jQuery 로 AJAX 요청
+            $.ajax({
+                type            : 'DELETE',               // 요청 메소드
+                url             : url,                    // 요청 URL
+                data            : data,                   // 요청 데이터
+                contentType     : 'application/xml',      // 요청 데이터 타입
+                dataType        : 'html',                 // 응답 데이터 타입
+                // 요청 성공 
+                success         : function(response, status) {
+                    // response : 응답 데이터
+                    // status   : 응답 상태
+                    alert(response)
+                    getList()
+                },
+                // 에러
+                error           : function(xhr, status) {
+                    // xhr      : XMLHttpRequest 객체
+                    // status   : 응답 상태
+                    alert('에러 발생')
+                }
+                
+            })
+            }
     </script>
 </body>
 </html>
