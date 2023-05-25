@@ -29,7 +29,7 @@
     
             <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li><a href="#" class="nav-link px-2 text-white">Home</a></li>
-              <li><a href="./list.html" class="nav-link px-2 text-white">Board</a></li>
+              <li><a href="board/list.html" class="nav-link px-2 text-white">Board</a></li>
               <li><a href="#" class="nav-link px-2 text-white">About</a></li>
             </ul>
     
@@ -46,34 +46,36 @@
       </header>
 
       <div class="container mt-5 py-y">
-        <h1 class="text-center py-5">글쓰기</h1>
+        <h1 class="text-center py-5">글수정</h1>
 
         <form action="" method="post">
             <table class="table">
                 <tr>
                     <td>제목</td>
                     <td>
-                        <input type="text" name="title" class="form-control">
+                        <input type="text" name="title" class="form-control" value="안녕하세요">
                     </td>
                 </tr>
                 <tr>
                     <td>작성자</td>
                     <td>
-                        <input type="text" name="writer" class="form-control">
+                        <input type="text" name="writer" class="form-control" value="김휴먼">
                     </td>
                 </tr>
                 <tr>
                     <td>내용</td>
                     <td>
-                        <textarea name="content" cols="40" rows="10" class="form-control"></textarea>
+                        <textarea name="content" cols="40" rows="10" class="form-control">수정할 내용입니다.</textarea>
                     </td>
                 </tr>
             </table>
             <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary mx-2">등록</button>
-                <a href="list.html" class="btn btn-success mx-2">목록</a>
-            </div>
-        </form>
+              <a href="update.html" class="btn btn-primary mx-2">수정</a>
+              <!-- javascript:; : 페이지 이동 막기 -->
+              <a href="javascript:;" class="btn btn-danger mx-2">삭제</a>
+              <a href="list.html" class="btn btn-success mx-2">목록</a>
+          </div>
+      </form>
     
 
     </div>
