@@ -94,17 +94,26 @@ header .menu nav ul li:hover::before  {
  }
 
  .btn-box .item {
-   /*  */
+   display: flex;
+   align-items: center;
+   column-gap: 10px;
  }
 
  .btn { 
    display: inline-block;
    min-width: 120px; 
-   min-height: 60px;
-   line-height: 60px;
+   min-height: 48px;
+   line-height: 48px;
    background-color: royalblue;
    color: white;
    text-align: center;
+}
+
+/* 작은 버튼 */
+.btn.btn-sm {
+   min-width: 60px;
+   min-height: 32px;
+   line-height: 32px;
 }
  
 /* 제목 영역 */
@@ -125,7 +134,7 @@ header .menu nav ul li:hover::before  {
    border-bottom: 1px solid gray;
    text-align: center;
 }
-.board tr:hover {
+.board.hover tr:hover {
    background-color: lightblue;
    font-weight: bold;
 }
@@ -172,6 +181,12 @@ header .menu nav ul li:hover::before  {
    padding-left: 10px;
    outline: none;
 }
+
+/* 유효성 검사 에러 시 */
+.input-text.error {
+   border-color: red;
+}
+
 .input-textarea {
    resize: none;
    width: 90%;
@@ -185,4 +200,108 @@ header .menu nav ul li:hover::before  {
 .input-textarea:focus {
    border: 2px solid royalblue;
    box-shadow: 3px 3px 5px rgba(100,100,200,0.3);
+}
+
+.input-text.error:focus {
+   border-color: red;
+}
+
+/* 검색창 */
+.input-search {
+   min-height: 48px;
+   font-size: 18px;
+   padding-left: 8px;
+}
+
+
+/* 에러 메시지 */
+.error-msg {
+   color: red;
+   padding-left: 12px;
+   font-size: 12px;
+}
+
+/* 페이지네이션 */
+.pagination {
+   margin: 40px auto;
+   text-align: center;
+   display: flex;
+   justify-content: center;
+}
+.pagination a {
+   display: inline-block;
+   width: 32px;
+   height: 32px;
+   line-height: 32px;
+   border: 1px solid gray;
+}
+.pagination .page-no {
+   font-size: 18px;
+}
+.pagination .page-arrow {
+   color: gray;
+}
+
+.pagination a.on,
+.pagination a:hover {
+   background-color: royalblue;
+   font-weight: bold;
+   color: white;
+} 
+
+
+
+/* 댓글 */
+#comment-list {
+   margin-bottom: 40px;
+}
+#comment-list .comment-box {
+   width: 400px;
+   border: 1px solid black;
+   padding: 12px;
+}
+#comment-list .comment-box .top {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   margin-bottom: 20px;
+}
+#comment-list .comment-box .bottom {}
+#comment-list .comment-box .comment-writer { font-weight: bold; }
+#comment-list .comment-box .comment-date { color: #333; font-size: 12px; }
+#comment-list .comment-box .comment-content {}
+
+#comment-list .comment-box .etc-box {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 12px 0;
+}
+
+.input-box {
+   border-top: 1px solid black;
+   border-bottom: 1px solid black;
+   margin: 20px 0;
+   padding: 20px 0;
+}
+.input-box .top {}
+.input-box .comment-input {
+   width: 400px;
+}
+.input-box .comment-input input {
+   min-height: 48px;
+   font-size: 18px;
+   padding-left: 8px;
+}
+.input-box .comment-input textarea {
+   font-size: 18px;
+   padding-left: 8px;
+   resize: none;
+   width: 100%;
+}
+
+.input-box .btn-box {
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
 }
