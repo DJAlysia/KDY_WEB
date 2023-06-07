@@ -22,8 +22,8 @@
             <nav>
                 <ul>
                     <li><a href="../index.html">Home</a></li>
-                    <li><a href="list.html">Board</a></li>
-                    <li><a href=".html">Gallery</a></li>
+                    <li><a href="../board/list.html">Board</a></li>
+                    <li><a href="../gallery/list.html">Gallery</a></li>
                 </ul>
             </nav>
         </div>
@@ -62,13 +62,13 @@
                     <a href="insert.html" class="btn">글쓰기</a>
                 </div>
             </div>
-    
+
             <div class="info">
                 <p>게시글 <span id="totalCount">0</span> 건이 조회되었습니다.</p>
             </div>
-
+    
             <!-- 게시글 목록 -->
-            <table class="board">
+            <table class="board hover">
                 <thead>
                     <tr>
                         <td class="num">번호</td>
@@ -163,8 +163,13 @@
                     let prev = pageInfo.prev
                     let next = pageInfo.next
 
-                    let totalCount = pageInfo.totalCount
+                    let totalCount  = pageInfo.totalCount
                     $('#totalCount').text(totalCount)
+
+                    // 데이터가 없는 경우 화살표 숨김
+                    if( totalCount == 0 ) {
+                        $('.page-arrow').hide()
+                    }
 
                     $('#first').attr('data', first)
                     $('#last').attr('data', last)
@@ -185,7 +190,8 @@
 
                 },
                 error : function(error) {
-
+                    // 서버 응답 실패
+                    $('.pagination').hide()     // 페이지 번호 숨김
                 }
             })
             
@@ -228,8 +234,6 @@
                     let boardList = response
 
                     displayList( boardList )
-                    
-                    // 여기서 부터...
                 },
                 error : function(error) {
 
